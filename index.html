@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<title>Angular + SLIM Crud!</title>
+	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+</head>	
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Angular + Slim</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li ng-if="isLoggedIn"><a href="#/users">Users</a></li>
+      <li ng-if="isLoggedIn"><a href="#/users/create">Create User</a></li> 
+      <li ng-if="!isLoggedIn"><a href="#/users/login">Login</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li ng-if="isLoggedIn"><a href="#/" ng-click="logout()">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="container">
+		
+	<ng-view>
+
+	</ng-view>
+
+</div>
+
+
+<!-- JAVASCRIPTS LIBRARIES FRAMEWORKS-->
+<script type="text/javascript" src="bower_components/angular/angular.js"></script>	
+<script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>	
+<script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>						
+<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>	
+<!-- ANGULAR MODULES -->
+<script type="text/javascript" src="app.js"></script>
+
+<!-- ANGULAR SERVICES -->
+<script type="text/javascript" src="angular/services/UserService.js"></script>
+<script type="text/javascript" src="angular/services/AuthService.js"></script>
+
+<!-- USERS MODULES -->
+<script type="text/javascript" src="angular/users/login.js"></script>
+<script type="text/javascript" src="angular/users/listing.js"></script>
+<script type="text/javascript" src="angular/users/create.js"></script>
+
+<!-- DIRECTIVES -->
+<script type="text/javascript" src="angular/directives/error_message.js"></script>
+
+</body>
+</html>
