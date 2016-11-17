@@ -12,14 +12,12 @@
 			UserService.login($scope.user,function(response){
 				if(response.status==true){
 					AuthService.setCredentials(response.user);
-					$rootScope.isLoggedIn = true;
+					$rootScope.$broadcast('loginSuccess');
 				}else{
 					alert('Account not found');
 				}
 			});
 		}
-
-
 	}
 
 })();

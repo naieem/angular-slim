@@ -6,6 +6,20 @@
 	// Initialize Back End Constant
 	app.constant('backend_url','http://localhost/ang-slim/api');
 
+	// Nav Controller
+	app.controller("NavController",NavController);
+
+	NavController.$inject = ['$rootScope','$scope'];
+	function NavController($rootScope,$scope){
+		$rootScope.$on('loginSuccess',function(event,args){
+			$scope.isLoggedIn = true;
+		});
+
+		$rootScope.$on('logoutSuccess',function(event,args){
+			$rootScope.isLoggedIn = false;
+		});
+	}
+
 	// Init Config
 	app.config(config);
 	config.$inject = ['$routeProvider'];
@@ -23,6 +37,7 @@
 				templateUrl : 'angular/users/login.html',
 				controller  : 'UsersLoginCtrl',
 				controllerAs : 'ul',
+				ridirectAuth : true
 			})
 			.when('/users',{
 				templateUrl : 'angular/users/listing.html',
@@ -32,7 +47,8 @@
 					users : function(UserService){
 						return UserService.getAllUsers();
 					}
-				}
+				},
+				requireAuth : true
 			})
 			.otherwise({
 				redirectTo : '/'
@@ -52,10 +68,20 @@
 			$rootScope.isLoggedIn = true;
 		}
 		
-
 		// Monitor Route Changes
-		$rootScope.$on('$locationChangeStart',function(event,next,current){
-			console.log($rootScope.globals);
+		$rootScope.$on('$routeChangeStart',function(event,next){
+			if(next.requireAuth===true){
+				if($rootScope.isLoggedIn===true){
+					console.log("Is logged in detected");
+				}else{
+					console.log("Still not");
+					$location.path('/users/login');
+				}
+			}else if(next.ridirectAuth==true){
+				if($rootScope.isLoggedIn===true){
+					$location.path('/users');
+				}
+			}
 		});
 
 		/**
